@@ -1,0 +1,6 @@
+*.exe
+*.cmo
+*.cmi
+*txt
+
+test.md
