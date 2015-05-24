@@ -1,6 +1,7 @@
 *.exe
 *.cmo
 *.cmi
-*txt
+*.txt
+*.html
 
 test.md
