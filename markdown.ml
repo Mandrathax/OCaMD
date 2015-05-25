@@ -4,18 +4,16 @@ type processors = (md -> unit) list
 
 let rec read_line_to_md_aux ic =
 	let rec read_paragraph ic =
-		try
-			let line = input_line ic in
-			let l = String.length line in
-			print_int l;
-			if l == 0 then "" else line ^ "\r" ^ (read_paragraph ic)
-		with End_of_file-> raise End_of_file
+		let line = input_line ic in
+		let l = String.length line in
+		let rl = (in_channel_length ic) - (pos_in ic) in
+		if l == 0 then "" else if rl==0 then line else line ^ "\n" ^ (read_paragraph ic)
 	in
-	try
+	if pos_in ic != in_channel_length ic then begin
 		let p = ref (read_paragraph ic) in
-		print_string ("\n" ^ !p ^ "\n");
 		p::(read_line_to_md_aux ic)
-	with End_of_file-> []
+	end else
+		[]
 
 let read_file_to_md f_name = 
 	let ic = open_in f_name in
