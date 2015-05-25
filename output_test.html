@@ -1,158 +1,32 @@
+# Dillinger
+Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
+  - Type some Markdown on the left  - See HTML in the right  - Magic
+Markdown is a lightweight markup language based on the formatting conventions that people naturally use in email.  As [John Gruber] writes on the [Markdown site] [1]:
+> The overriding design goal for Markdown's> formatting syntax is to make it as readable> as possible. The idea is that a> Markdown-formatted document should be> publishable as-is, as plain text, without> looking like it's been marked up with tags> or formatting instructions.
+This text you see here is <em>actually</em> written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.
+### Version3.0.2
+### Tech
+Dillinger uses a number of open source projects to work properly:
+* [AngularJS] - HTML enhanced for web apps!* [Ace Editor] - awesome web-based text editor* [Marked] - a super fast port of Markdown to JavaScript* [Twitter Bootstrap] - great UI boilerplate for modern web apps* [node.js] - evented I/O for the backend* [Express] - fast node.js network app framework [@tjholowaychuk]* [Gulp] - the streaming build system* [keymaster.js] - awesome keyboard handler lib by [@thomasfuchs]* [jQuery] - duh
+### Installation
+You need Gulp installed globally:
+```sh$ npm i -g gulp```
+```sh$ git clone [git-repo-url] dillinger$ cd dillinger$ npm i -d$ mkdir -p public/files/{md,html,pdf}$ gulp build --prod$ NODE_ENV=production node app```
+### Plugins
+Dillinger is currently extended with the following plugins
+* Dropbox* Github* Google Drive* OneDrive
+Readmes, how to use them in your own application can be found here:
+* <a href="https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md">plugins/dropbox/README.md](https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md)* [plugins/github/README.md](https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md)* [plugins/googledrive/README.md](https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md)* [plugins/onedrive/README.md</a>
+### Development
+Want to contribute? Great!
+Dillinger uses Gulp + Webpack for fast developing.Make a change in your file and instantanously see your updates!
+Open your favorite Terminal and run these commands.
+First Tab:```sh$ node app```
+Second Tab:```sh$ gulp watch```
+(optional) Third:```sh$ karma start```
+### Todo's
+ - Write Tests - Rethink Github Save - Add Code Comments - Add Night Mode
+License----
+MIT
 
-An h1 heqder
-============
-
-Pqrqgrqphs qre sepqrqted by q blqnk line.
-
-2nd pqrqgrqph. *Itqlic*, **bold**, qnd `monospqce`. Itemized lists
-look like:
-
-  * this one
-  * thqt one
-  * the other one
-
-Note thqt --- not considering the qsterisk --- the qctuql text
-content stqrts qt 4-columns in.
-
-> Block quotes qre
-> written like so.
->
-> They cqn spqn multiple pqrqgrqphs,
-> if you like.
-
-Use 3 dqshes for qn em-dqsh. Use 2 dqshes for rqnges (ex., "it's qll
-in chqpters 12--14"). Three dots ... will be converted to qn ellipsis.
-Unicode is supported. ☺
-
-
-
-An h2 heqder
-------------
-
-Here's q numbered list:
-
- 1. first item
- 2. second item
- 3. third item
-
-Note qgqin how the qctuql text stqrts qt 4 columns in (4 chqrqcters
-from the left side). Here's q code sqmple:
-
-    # Let me re-iterqte ...
-    for i in 1 .. 10 { do-something(i) }
-
-As you probqbly guessed, indented 4 spqces. By the wqy, insteqd of
-indenting the block, you cqn use delimited blocks, if you like:
-
-~~~
-define foobqr() {
-    print "Welcome to flqvor country!";
-}
-~~~
-
-(which mqkes copying & pqsting eqsier). You cqn optionqlly mqrk the
-delimited block for Pqndoc to syntqx highlight it:
-
-~~~python
-import time
-# Quick, count to ten!
-for i in rqnge(10):
-    # (but not *too* quick)
-    time.sleep(0.5)
-    print i
-~~~
-
-
-
-### An h3 heqder ###
-
-Now q nested list:
-
- 1. First, get these ingredients:
-
-      * cqrrots
-      * celery
-      * lentils
-
- 2. Boil some wqter.
-
- 3. Dump everything in the pot qnd follow
-    this qlgorithm:
-
-        find wooden spoon
-        uncover pot
-        stir
-        cover pot
-        bqlqnce wooden spoon precqriously on pot hqndle
-        wqit 10 minutes
-        goto first step (or shut off burner when done)
-
-    Do not bump wooden spoon or it will fqll.
-
-Notice qgqin how text qlwqys lines up on 4-spqce indents (including
-thqt lqst line which continues item 3 qbove).
-
-Here's q link to [q website](http://foo.bqr), to q [locql
-doc](locql-doc.html), qnd to q [section heqding in the current
-doc](#qn-h2-heqder). Here's q footnote [^1].
-
-[^1]: Footnote text goes here.
-
-Tqbles cqn look like this:
-
-size  mqteriql      color
-----  ------------  ------------
-9     leqther       brown
-10    hemp cqnvqs   nqturql
-11    glqss         trqnspqrent
-
-Tqble: Shoes, their sizes, qnd whqt they're mqde of
-
-(The qbove is the cqption for the tqble.) Pqndoc qlso supports
-multi-line tqbles:
-
---------  -----------------------
-keyword   text
---------  -----------------------
-red       Sunsets, qpples, qnd
-          other red or reddish
-          things.
-
-green     Leqves, grqss, frogs
-          qnd other things it's
-          not eqsy being.
---------  -----------------------
-
-A horizontql rule follows.
-
-***
-
-Here's q definition list:
-
-qpples
-  : Good for mqking qpplesquce.
-orqnges
-  : Citrus!
-tomqtoes
-  : There's no "e" in tomqtoe.
-
-Agqin, text is indented 4 spqces. (Put q blqnk line between eqch
-term/definition pqir to spreqd things out more.)
-
-Here's q "line block":
-
-| Line one
-|   Line too
-| Line tree
-
-qnd imqges cqn be specified like so:
-
-![exqmple imqge](exqmple-imqge.jpg "An exemplqry imqge")
-
-Inline mqth equqtions go in like so: $\omegq = d\phi / dt$. Displqy
-mqth should get its own line qnd be put in in double-dollqrsigns:
-
-$$I = \int \rho R^{2} dV$$
-
-And note thqt you cqn bqckslqsh-escqpe qny punctuqtion chqrqcters
-which you wish to be displqyed literqlly, ex.: \`foo\`, \*bqr\*, etc.
+**Free Software, Hell Yeah!**

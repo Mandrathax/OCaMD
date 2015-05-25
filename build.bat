@@ -1,1 +1,1 @@
-ocamlc str.cma markdown.ml test.ml -o test.exe
+ocamlc -o test.exe str.cma markdown.mli markdown.ml test.ml
