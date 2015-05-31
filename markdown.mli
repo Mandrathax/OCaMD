@@ -9,13 +9,17 @@ type processors
 val md_fread : string -> md
 
 (** Writes a file and returns success boolean *)
-val md_fwrite : md -> string -> unit
+val md_fwrite : md -> (md -> out_channel -> unit) -> string -> unit
 
 (** prints to output channel *)
 val md_print : md -> out_channel -> unit
+
+val md_pretty_print : md -> out_channel -> unit
 
 val init_proc : string -> processors
 
 (** Processes text and replaces *)
 
-val proc : md -> processors -> unit
+val proc_inline : md -> processors -> unit
+
+val proc_paragraph : md -> unit
