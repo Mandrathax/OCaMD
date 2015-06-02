@@ -74,8 +74,6 @@ let init_func str =
 	let str1 = Str.global_replace (Str.regexp "\\n") "\n" tab.(1) in (* solution for newline issue *)
 	let reg1 = Str.regexp str1 in
 	let reg2 = tab.(0) in
-	(* print_string tab.(1);
-	print_string tab.(0); *)
 	let temp markdown = 
 		let rec temp2 l = 
 		match l with
@@ -86,7 +84,7 @@ let init_func str =
 	in
 	temp;;
 
-let init_proc (conf:string) : processors =
+let init_inline_procs (conf:string) : processors =
 	let ic = open_in conf in
 	let ret = ref [] in
 	try
@@ -180,17 +178,16 @@ let rec init_paragraph_procs l =
 	| h::t -> (proc_from_function h)::(init_paragraph_procs t)
 	| [] -> []
 
-let paragraph_procs = init_paragraph_procs [process_quote;process_ul;process_ol;process_fenced_code]
+let paragraph_procs_list =  [process_quote;process_ul;process_ol;process_fenced_code]
 
-let proc_paragraph (markdown:md) : unit =
+let proc_paragraph (markdown:md) (l:processors): unit =
 	let rec p_p_rec l = match l with
 	| h::t -> h markdown; p_p_rec t
 	| [] -> ()
-	in p_p_rec paragraph_procs
+	in p_p_rec l
 
-
-(* let rec h3_proc markdown = 
-	let l = markdown.content in
-	match l with
-	| []->()
-	| hd::tl -> hd := Str.global_replace (Str.regexp "### \\(\\(.\\)*\\)") "<h3>\\1</h3>" !hd; h3_proc {name = markdown.name ; content = tl} *)
+let translate (markdown:md) : unit =
+	let inline_procs = init_inline_procs "conf.txt" in
+	let paragraph_procs = init_paragraph_procs paragraph_procs_list in
+	proc_inline markdown inline_procs;
+	proc_paragraph markdown paragraph_procs

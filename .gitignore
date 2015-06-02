@@ -1,6 +1,8 @@
 *.exe
 *.cmo
 *.cmi
+*.cmx
+*.o
 *.txt
 *.html
 
