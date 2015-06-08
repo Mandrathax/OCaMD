@@ -1,0 +1,1 @@
+ocamlc -o ocamd.exe str.cma ocamd.mli ocamd.ml main.ml

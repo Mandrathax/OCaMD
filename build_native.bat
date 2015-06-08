@@ -1,0 +1,1 @@
+ocamlopt -o ocamd.exe str.cmxa ocamd.mli ocamd.ml main.ml
