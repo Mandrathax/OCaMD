@@ -6,6 +6,9 @@ type md
 (** List of functions processing the file *)
 type processors
 
+(** gets name of md file *)
+val md_get_name : md -> string
+
 (** Reads a file and returns a list containing all paragraphs *)
 val md_fread : string -> md
 

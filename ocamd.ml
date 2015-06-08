@@ -2,6 +2,7 @@ type md = {name : string ; mutable content : (string ref) list}
 
 type processors = (md -> unit) list
 
+(** Regex for paragraph detection *)
 let quote = Str.regexp "^\\( \\)?\\( \\)?\\( \\)?>\\( \\)?"
 let quote_char = [' ';'>']
 
@@ -9,9 +10,11 @@ let ul_li = Str.regexp "^\\( \\)?\\( \\)?\\( \\)?[*+-]\\( \\)?"
 
 let ol_li = Str.regexp "^\\( \\)?\\( \\)?\\( \\)?[0-9]+[.)]\\( \\)?"
 
-let indented_code = Str.regexp "^\\(    \\)"
+let indented_code = Str.regexp "^\\(    \\|\t\\)[ \t]+"
 
 let fenced_code = Str.regexp "^\\(```\\)\\|\\(~~~\\)\\(.*\\)?"
+
+let md_get_name (markdown:md) : string = markdown.name
 
 let rec read_line_to_md_aux ic =
 	let rec read_paragraph ic =
@@ -32,7 +35,7 @@ let read_file_to_md f_name =
 
 let md_fread f_name =
 	try let cont = read_file_to_md f_name in 
-		{name = f_name ; content =  cont}
+		{name = Filename.chop_extension f_name ; content =  cont}
 	with Sys_error err -> 
 		print_string "Could not open file";
 		{name = String.sub f_name 0 (String.length f_name - 3); content =  []};;
@@ -162,6 +165,21 @@ let process_fenced_code (p:string) : string =
 	with
 	| Not_found -> p
 
+let process_indented_code (p:string) : string =
+	try
+		let n = Str.search_forward indented_code p 0 in
+		if n==0 then begin
+			let l = Str.split indented_code p in
+			let rec p_i_c_aux l acc = match l with
+			| h::t -> p_i_c_aux t (acc ^ h)
+			| [] -> acc
+			in 
+			let n_p = p_i_c_aux l "" in
+			"<pre>"^n_p^"</pre>"
+		end else p
+	with
+	| Not_found -> p
+
 
 (* <p> processing, somewhat dirty. Could be improved by keeping in mind which paragraph has already been treated *)
 let process_p (p:string) : string =
@@ -187,7 +205,7 @@ let rec init_paragraph_procs l =
 	| h::t -> (proc_from_function h)::(init_paragraph_procs t)
 	| [] -> []
 
-let paragraph_procs_list =  [process_quote;process_ul;process_ol;process_fenced_code;process_p]
+let paragraph_procs_list =  [process_quote;process_ul;process_ol;process_fenced_code;process_indented_code;process_p]
 
 let proc_paragraph (markdown:md) (l:processors): unit =
 	let rec p_p_rec l = match l with
