@@ -3,7 +3,7 @@
 *.cmi
 *.cmx
 *.o
-*.txt
+*_test.txt
 *.html
 
 test.md
