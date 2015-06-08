@@ -162,6 +162,15 @@ let process_fenced_code (p:string) : string =
 	with
 	| Not_found -> p
 
+
+(* <p> processing, somewhat dirty. Could be improved by keeping in mind which paragraph has already been treated *)
+let process_p (p:string) : string =
+	let l = String.length p in
+	if l == 0 || p == "\n" then "" else begin
+		if String.get p 0 != '<' || String.get p (String.length p - 1) != '>' then "<p>"^p^"</p>" else p
+	end
+	
+
 let proc_from_function f =
 	let proc f markdown =
 		let rec proc_aux f l =
@@ -178,7 +187,7 @@ let rec init_paragraph_procs l =
 	| h::t -> (proc_from_function h)::(init_paragraph_procs t)
 	| [] -> []
 
-let paragraph_procs_list =  [process_quote;process_ul;process_ol;process_fenced_code]
+let paragraph_procs_list =  [process_quote;process_ul;process_ol;process_fenced_code;process_p]
 
 let proc_paragraph (markdown:md) (l:processors): unit =
 	let rec p_p_rec l = match l with
